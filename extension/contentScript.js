@@ -23,6 +23,8 @@ function loadEmojis() {
                 smileysContainer.innerHTML = '';
 
                 const textArea = document.getElementById('usermsg');
+                
+                const changeInputEvent = new Event('input', { bubbles: true });
 
                 Emoji.emojis.forEach((element, index) => {
 
@@ -30,8 +32,10 @@ function loadEmojis() {
                     emojiSpan.style = 'width: 1em; height: 1em; margin: 0px 0.05em 0px 0.1em; vertical-align: -0.1em;';
                     emojiSpan.innerText = element.emoji;
                     emojiSpan.addEventListener('click', () => {
+
                         textArea.focus();
-                        document.execCommand('insertText', false, ` ${element.emoji}`);
+                        textArea.value += element.emoji;
+                        textArea.dispatchEvent(changeInputEvent);
                     });
 
                     const spanContainer = document.createElement('span');
